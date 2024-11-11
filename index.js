@@ -21,3 +21,32 @@ let brickWidth = (canvas.width / columns) - 10;
 let brickHeight = 20;
 let brickPadding = 10;
 let gameRunning = true;
+
+function initializeBricks() {
+   for (let row = 0; row < rows; row++) {
+       bricks[row] = [];
+       for (let col = 0; col < columns; col++) {
+           bricks[row][col] = { x: col * (brickWidth + brickPadding), y: row * (brickHeight + brickPadding), hit: false };
+       }
+   }
+}
+
+initializeBricks();
+
+function drawBricks() {
+   ctx.fillStyle = "grey";
+   bricks.forEach(row => {
+       row.forEach(brick => {
+           if (!brick.hit) {
+               ctx.fillRect(brick.x, brick.y, brickWidth, brickHeight);
+           }
+       });
+   });
+}
+
+function startGame() {
+   ctx.clearRect(0, 0, canvas.width, canvas.height);
+   drawBricks();
+}
+
+startGame();
