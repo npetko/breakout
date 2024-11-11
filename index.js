@@ -78,4 +78,9 @@ function startGame() {
    }
 }
 
+document.addEventListener("keydown", (e) => {
+   if (e.key === "ArrowLeft" && batX > 0) batX -= 20;
+   if (e.key === "ArrowRight" && batX + batWidth < canvas.width) batX += 20;
+});
+
 startGame();
