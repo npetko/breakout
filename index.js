@@ -49,10 +49,19 @@ function drawBat() {
    ctx.fillRect(batX, batY, batWidth, batHeight);
 }
 
+function drawBall() {
+   ctx.beginPath();
+   ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
+   ctx.fillStyle = "black";
+   ctx.fill();
+   ctx.closePath();
+}
+
 function startGame() {
    ctx.clearRect(0, 0, canvas.width, canvas.height);
    drawBricks();
    drawBat();
+   drawBall();
 }
 
 startGame();
