@@ -70,6 +70,12 @@ function startGame() {
    drawBat();
    drawBall();
    calculateScore();
+
+   if (gameRunning) {
+      ballX += ballSpeedX;
+      ballY += ballSpeedY;
+      requestAnimationFrame(startGame)
+   }
 }
 
 startGame();
