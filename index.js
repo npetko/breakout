@@ -64,12 +64,30 @@ function calculateScore(){
    ctx.fillText(`Best Score: ${bestScore}`, canvas.width - 20, 40);
 }
 
+function collisions() {
+   bricks.forEach(row => {
+      row.forEach(brick => {
+         if (!brick.hit && ballX > brick.x && ballX < brick.x + brickWidth && ballY > brick.y && ballY < brick.y + brickHeight) {
+            ballSpeedY = -ballSpeedY;
+            brick.hit = true;
+            score++;
+         }
+      });
+   });
+
+   if (ballX + ballRadius > canvas.width || ballX - ballRadius < 0) ballSpeedX = -ballSpeedX;
+   if (ballY - ballRadius < 0) ballSpeedY = -ballSpeedY;
+
+   if (ballY + ballRadius > batY && ballX > batX && ballX < batX + batWidth) ballSpeedY = -ballSpeedY;
+}
+
 function startGame() {
    ctx.clearRect(0, 0, canvas.width, canvas.height);
    drawBricks();
    drawBat();
    drawBall();
    calculateScore();
+   collisions();
 
    if (gameRunning) {
       ballX += ballSpeedX;
