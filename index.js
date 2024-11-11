@@ -10,8 +10,9 @@ let batY = canvas.height - 30;
 let ballRadius = 8;
 let ballX = canvas.width / 2;
 let ballY = batY - ballRadius;
-let ballSpeedX = 2 * (Math.random() < 0.5 ? -1 : 1);
-let ballSpeedY = -2;
+let ballSpeed = 4;
+let ballSpeedX = 0;
+let ballSpeedY = 0;
 let score = 0;
 let bestScore = localStorage.getItem("bestScore") || 0;
 let bricks = [];
@@ -33,6 +34,19 @@ function initializeBricks() {
 }
 
 initializeBricks();
+
+function initializeBallDirection() {
+   let angle = (Math.random() * (120) + 30) * (Math.PI / 180);
+
+   if (Math.random() > 0.5) {
+      angle = -angle;
+  }
+
+   ballSpeedX = ballSpeed * Math.cos(angle);
+   ballSpeedY = -Math.abs(ballSpeed * Math.sin(angle));
+}
+
+initializeBallDirection();
 
 function drawBricks() {
    ctx.fillStyle = "grey";
