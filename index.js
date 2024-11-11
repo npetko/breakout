@@ -97,15 +97,9 @@ function collisions() {
 }
 
 function endGame() {
-   if (ballY + ballRadius > canvas.height) {
+   if (ballY + ballRadius > canvas.height || score === rows * columns) {
+      score === rows * columns ? gameMessage = "WINNER" : gameMessage = "GAME OVER";
       gameRunning = false;
-      gameMessage = "GAME OVER"
-      localStorage.setItem("bestScore", Math.max(score, bestScore));
-   }
-
-   if (score === rows * columns) {
-      gameRunning = false;
-      gameMessage = "WINNER"
       localStorage.setItem("bestScore", Math.max(score, bestScore));
    }
 }
@@ -120,12 +114,12 @@ function startGame() {
    drawBat();
    drawBall();
    calculateScore();
+   collisions();
+   endGame();
 
    if (gameRunning) {
       ballX += ballSpeedX;
       ballY += ballSpeedY;
-      collisions();
-      endGame();
       requestAnimationFrame(startGame)
    } else {
       displayEndMessage();
