@@ -24,10 +24,10 @@ let gameRunning = true;
 
 function initializeBricks() {
    for (let row = 0; row < rows; row++) {
-       bricks[row] = [];
-       for (let col = 0; col < columns; col++) {
-           bricks[row][col] = { x: col * (brickWidth + brickPadding), y: row * (brickHeight + brickPadding), hit: false };
-       }
+      bricks[row] = [];
+      for (let col = 0; col < columns; col++) {
+         bricks[row][col] = { x: col * (brickWidth + brickPadding), y: row * (brickHeight + brickPadding), hit: false };
+      }
    }
 }
 
@@ -36,17 +36,23 @@ initializeBricks();
 function drawBricks() {
    ctx.fillStyle = "grey";
    bricks.forEach(row => {
-       row.forEach(brick => {
-           if (!brick.hit) {
-               ctx.fillRect(brick.x, brick.y, brickWidth, brickHeight);
-           }
-       });
+      row.forEach(brick => {
+         if (!brick.hit) {
+            ctx.fillRect(brick.x, brick.y, brickWidth, brickHeight);
+         }
+      });
    });
+}
+
+function drawBat() {
+   ctx.fillStyle = "red";
+   ctx.fillRect(batX, batY, batWidth, batHeight);
 }
 
 function startGame() {
    ctx.clearRect(0, 0, canvas.width, canvas.height);
    drawBricks();
+   drawBat();
 }
 
 startGame();
