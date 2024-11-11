@@ -26,7 +26,7 @@ function initializeBricks() {
    for (let row = 0; row < rows; row++) {
       bricks[row] = [];
       for (let col = 0; col < columns; col++) {
-         bricks[row][col] = { x: col * (brickWidth + brickPadding), y: row * (brickHeight + brickPadding), hit: false };
+         bricks[row][col] = { x: col * (brickWidth + brickPadding), y: row * (brickHeight + brickPadding) + 3 * brickHeight, hit: false };
       }
    }
 }
@@ -57,11 +57,19 @@ function drawBall() {
    ctx.closePath();
 }
 
+function calculateScore(){
+   ctx.fillStyle = "black";
+   ctx.textAlign = "right";
+   ctx.fillText(`Score: ${score}`, canvas.width - 20, 20);
+   ctx.fillText(`Best Score: ${bestScore}`, canvas.width - 20, 40);
+}
+
 function startGame() {
    ctx.clearRect(0, 0, canvas.width, canvas.height);
    drawBricks();
    drawBat();
    drawBall();
+   calculateScore();
 }
 
 startGame();
