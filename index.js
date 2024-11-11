@@ -21,6 +21,7 @@ let brickWidth = (canvas.width / columns) - 10;
 let brickHeight = 20;
 let brickPadding = 10;
 let gameRunning = true;
+let gameMessage = "";
 
 function initializeBricks() {
    for (let row = 0; row < rows; row++) {
@@ -81,18 +82,39 @@ function collisions() {
    if (ballY + ballRadius > batY && ballX > batX && ballX < batX + batWidth) ballSpeedY = -ballSpeedY;
 }
 
+function endGame() {
+   if (ballY + ballRadius > canvas.height) {
+      gameRunning = false;
+      gameMessage = "GAME OVER"
+      localStorage.setItem("bestScore", Math.max(score, bestScore));
+   }
+
+   if (score === rows * columns) {
+      gameRunning = false;
+      gameMessage = "WINNER"
+      localStorage.setItem("bestScore", Math.max(score, bestScore));
+   }
+}
+
+function displayEndMessage() {
+   ctx.fillText(gameMessage, canvas.width / 2, canvas.height / 2);
+}
+
 function startGame() {
    ctx.clearRect(0, 0, canvas.width, canvas.height);
    drawBricks();
    drawBat();
    drawBall();
    calculateScore();
-   collisions();
 
    if (gameRunning) {
       ballX += ballSpeedX;
       ballY += ballSpeedY;
+      collisions();
+      endGame();
       requestAnimationFrame(startGame)
+   } else {
+      displayEndMessage();
    }
 }
 
