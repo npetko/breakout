@@ -1,7 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = window.innerWidth - 20;
+canvas.height = window.innerHeight - 20;
 
 let batWidth = 100;
 let batHeight = 20;
@@ -53,6 +53,11 @@ function initializeBallDirection() {
 initializeBallDirection();
 
 function drawBricks() {
+   ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
+   ctx.shadowBlur = 4;
+   ctx.shadowOffsetX = 0;
+   ctx.shadowOffsetY = 4;
+
    ctx.fillStyle = "grey";
    bricks.forEach(row => {
       row.forEach(brick => {
@@ -66,6 +71,7 @@ function drawBricks() {
 function drawBat() {
    ctx.fillStyle = "red";
    ctx.fillRect(batX, batY, batWidth, batHeight);
+   ctx.shadowColor = "transparent";
 }
 
 function drawBall() {
