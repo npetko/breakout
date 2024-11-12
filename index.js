@@ -7,7 +7,7 @@ let batWidth = 100;
 let batHeight = 10;
 let batX = (canvas.width - batWidth) / 2;
 let batY = canvas.height - 30;
-let ballRadius = 8;
+let ballRadius = 10;
 let ballX = canvas.width / 2;
 let ballY = batY - ballRadius;
 let ballSpeed = 4;
@@ -93,7 +93,16 @@ function collisions() {
    if (ballX + ballRadius > canvas.width || ballX - ballRadius < 0) ballSpeedX = -ballSpeedX;
    if (ballY - ballRadius < 0) ballSpeedY = -ballSpeedY;
 
-   if (ballY + ballRadius > batY && ballX > batX && ballX < batX + batWidth) ballSpeedY = -ballSpeedY;
+   if (ballY + ballRadius > batY && ballX > batX && ballX < batX + batWidth) {
+      let hitPosition = ballX - (batX + batWidth / 2);
+
+      let normalizedHitPosition = hitPosition / (batWidth / 2);
+
+      const maxAngleChangeFactor = 1.5;
+      ballSpeedX += maxAngleChangeFactor * normalizedHitPosition * Math.abs(ballSpeedY);
+
+      ballSpeedY = -ballSpeedY;
+   }
 }
 
 function endGame() {
