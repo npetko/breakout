@@ -155,7 +155,7 @@ function endGame() {
 }
 
 function displayEndMessage() {
-   ctx.font = "bold 50px Arial";
+   ctx.font = "bold 100px Arial";
    ctx.textAlign = "center";
    ctx.textBaseline = "middle";
    ctx.fillText(gameMessage, canvas.width / 2, canvas.height / 2);
