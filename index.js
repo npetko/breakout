@@ -4,22 +4,26 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let batWidth = 100;
-let batHeight = 10;
+let batHeight = 20;
+let batSpeed = 10;
 let batX = (canvas.width - batWidth) / 2;
 let batY = canvas.height - 30;
+
 let ballRadius = 10;
 let ballX = canvas.width / 2;
 let ballY = batY - ballRadius;
 let ballSpeed = 4;
 let ballSpeedX = 0;
 let ballSpeedY = 0;
+
 let score = 0;
 let bestScore = localStorage.getItem("bestScore") || 0;
+
 let bricks = [];
 let rows = 3;
 let columns = 7;
 let brickWidth = (canvas.width / columns) - 10;
-let brickHeight = 20;
+let brickHeight = 30;
 let brickPadding = 10;
 let gameRunning = true;
 let gameMessage = "";
@@ -99,9 +103,37 @@ function collisions() {
       let normalizedHitPosition = hitPosition / (batWidth / 2);
 
       const maxAngleChangeFactor = 1.5;
-      ballSpeedX += maxAngleChangeFactor * normalizedHitPosition * Math.abs(ballSpeedY);
+      ballSpeedX = maxAngleChangeFactor * normalizedHitPosition * Math.abs(ballSpeedY);
 
       ballSpeedY = -ballSpeedY;
+   }
+}
+
+let isMovingLeft = false;
+let isMovingRight = false;
+
+document.addEventListener("keydown", (e) => {
+   if (e.key === "ArrowLeft") {
+      isMovingLeft = true;
+   } else if (e.key === "ArrowRight") {
+      isMovingRight = true;
+   }
+});
+
+document.addEventListener("keyup", (e) => {
+   if (e.key === "ArrowLeft") {
+      isMovingLeft = false;
+   } else if (e.key === "ArrowRight") {
+      isMovingRight = false;
+   }
+});
+
+function updateBatPosition() {
+   if (isMovingLeft && batX > 0) {
+      batX -= batSpeed;
+   }
+   if (isMovingRight && batX < canvas.width - batWidth) {
+      batX += batSpeed;
    }
 }
 
@@ -129,15 +161,11 @@ function startGame() {
    if (gameRunning) {
       ballX += ballSpeedX;
       ballY += ballSpeedY;
+      updateBatPosition();
       requestAnimationFrame(startGame)
    } else {
       displayEndMessage();
    }
 }
-
-document.addEventListener("keydown", (e) => {
-   if (e.key === "ArrowLeft" && batX > 0) batX -= 20;
-   if (e.key === "ArrowRight" && batX + batWidth < canvas.width) batX += 20;
-});
 
 startGame();

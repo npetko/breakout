@@ -4,10 +4,13 @@ body, html {
    overflow: hidden;
 }
 
-#gameCanva {
+#gameCanvas {
    margin: 0;
    padding: 0;
    position: absolute;
    top: 0;
    left: 0;
+   border: 2px solid black;
+   display: block;
+   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
