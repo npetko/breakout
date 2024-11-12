@@ -85,8 +85,9 @@ function drawBall() {
 function calculateScore(){
    ctx.fillStyle = "black";
    ctx.textAlign = "right";
+   ctx.font = "bold 24px Arial";
    ctx.fillText(`Score: ${score}`, canvas.width - 20, 20);
-   ctx.fillText(`Best Score: ${bestScore}`, canvas.width - 20, 40);
+   ctx.fillText(`Best Score: ${bestScore}`, canvas.width - 20, 50);
 }
 
 function collisions() {
@@ -108,10 +109,12 @@ function collisions() {
 
       let normalizedHitPosition = hitPosition / (batWidth / 2);
 
-      const maxAngleChangeFactor = 1.5;
-      ballSpeedX = maxAngleChangeFactor * normalizedHitPosition * Math.abs(ballSpeedY);
+      const maxBounceAngle = Math.PI / 3;
 
-      ballSpeedY = -ballSpeedY;
+      let bounceAngle = normalizedHitPosition * maxBounceAngle;
+
+      ballSpeedX = ballSpeed * Math.sin(bounceAngle);
+      ballSpeedY = -ballSpeed * Math.cos(bounceAngle);
    }
 }
 
@@ -152,6 +155,9 @@ function endGame() {
 }
 
 function displayEndMessage() {
+   ctx.font = "bold 50px Arial";
+   ctx.textAlign = "center";
+   ctx.textBaseline = "middle";
    ctx.fillText(gameMessage, canvas.width / 2, canvas.height / 2);
 }
 
